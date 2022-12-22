@@ -3,6 +3,7 @@ package com.example.techstorm_2023.NavBarContents
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.GridCells
@@ -40,7 +41,7 @@ fun SponcersScreen(){
 @Composable
 fun SponcerItem(data : SponcersData){
     Card(
-        modifier= Modifier.padding(5.dp,0.dp,0.dp,0.dp),
+        modifier= Modifier.padding(5.dp,0.dp,0.dp,0.dp).fillMaxWidth(),
         backgroundColor = Color.Black
     ) {
         val imageModifier = Modifier

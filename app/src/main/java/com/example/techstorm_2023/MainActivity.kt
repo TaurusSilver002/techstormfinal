@@ -56,10 +56,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 
 
@@ -442,7 +439,6 @@ fun PhotoItem(data : GalleryData){
 
 fun getJsonDataFromAsset(context: Context, data: String):String {
     return context.assets.open(data).bufferedReader().use { it.readText() }
-
 }
 
 
@@ -573,7 +569,15 @@ fun Navigation(navController: NavHostController){
         }
 
         composable(NavigationItem.Sponcers.route){
-            SponcersScreen()
+
+            val scrallablestate = rememberScrollState()
+            Column(modifier = Modifier.verticalScroll(scrallablestate).fillMaxWidth()) {
+                    SponcerItem(SponcersData(R.drawable.image_1))
+                    SponcerItem(SponcersData(R.drawable.image_2))
+                    SponcerItem(SponcersData(R.drawable.image_3))
+                    SponcerItem(SponcersData(R.drawable.image_4))
+                    SponcerItem(SponcersData(R.drawable.image_5))
+            }
         }
         //Result
         composable(NavigationItem.ResultScreen.route){
