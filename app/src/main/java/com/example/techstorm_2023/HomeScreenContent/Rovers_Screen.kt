@@ -236,8 +236,6 @@ fun RoversList(navController: NavHostController){
 
         )
     val scrallablestate = rememberScrollState()
-
-
     Column(modifier = Modifier.verticalScroll(scrallablestate).fillMaxWidth()) {
         for(data in homedata) {
             HomeItem(data,navController)
