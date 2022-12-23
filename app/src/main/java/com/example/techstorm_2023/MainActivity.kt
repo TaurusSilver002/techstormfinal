@@ -100,19 +100,17 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainScreen()
-
+            val navController = rememberNavController()
+            Navigation(navController = navController,NavigationItem.AnimatedSplashScreen.route)
         }
     }
 }
 
 @Composable
 fun MainScreen(){
-
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
-    AnimatedSplashScreen(navController = navController)
     Scaffold(
         scaffoldState = scaffoldState,
         backgroundColor = Color.Black,
@@ -121,7 +119,7 @@ fun MainScreen(){
             Drawer(scope = scope, scaffoldState = scaffoldState, navController = navController)
         }
     ) {
-        Navigation(navController = navController)
+        Navigation(navController = navController, startDestination = NavigationItem.Home.route)
     }
 
 }
@@ -443,9 +441,9 @@ fun getJsonDataFromAsset(context: Context, data: String):String {
 
 
 @Composable
-fun Navigation(navController: NavHostController){
+fun Navigation(navController: NavHostController,startDestination : String){
 
-    NavHost(navController, startDestination = NavigationItem.AnimatedSplashScreen.route){
+    NavHost(navController, startDestination = startDestination){
         composable(NavigationItem.AnimatedSplashScreen.route){
             AnimatedSplashScreen(navController)
         }
