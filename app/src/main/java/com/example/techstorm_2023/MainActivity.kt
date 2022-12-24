@@ -1,55 +1,11 @@
 package com.example.techstorm_2023
 
-/*import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.techstorm_2023.ui.theme.TECHSTORM_2023Theme
-
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            TECHSTORM_2023Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TECHSTORM_2023Theme {
-        Greeting("Android")
-    }
-}
-
- */
-
 
 //NEW
 
 import com.example.techstorm_2023.NavBarContents.*
 import com.example.techstorm_2023.HomeScreenContent.*
-//import com.example.techstorm223.ResultScreenContents.*
+
 
 import android.content.Context
 
@@ -91,9 +47,8 @@ import androidx.compose.material.Text
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.items
-//import com.example.techstorm223.HomeScreenContent.RoversList
 import com.example.techstorm_2023.navigation.*
-//import com.example.techstorm_2023.NavBarContents.SponcersScreen
+
 
 
 class MainActivity : ComponentActivity() {
@@ -118,7 +73,8 @@ fun MainScreen(){
         drawerContent = {
             Drawer(scope = scope, scaffoldState = scaffoldState, navController = navController)
         }
-    ) {
+    )
+    {
         Navigation(navController = navController, startDestination = NavigationItem.Home.route)
     }
 
@@ -126,7 +82,6 @@ fun MainScreen(){
 
 @Composable
 fun TopBar(scope: CoroutineScope, scaffoldState: ScaffoldState){
-
     TopAppBar(
         title = { Text(text = "Tech Storm 2.23", fontSize = 18.sp) },
         navigationIcon = {
@@ -152,7 +107,6 @@ fun Drawer(scope: CoroutineScope, scaffoldState: ScaffoldState, navController: N
         NavigationItem.Schedule,
         NavigationItem.ResultScreen,
         NavigationItem.Sponcers,
-        NavigationItem.Team,
         NavigationItem.Developers,
         NavigationItem.Aboutus,
         NavigationItem.PhotoGallery,
@@ -344,46 +298,6 @@ data  class GalleryData(
     val imgUri:Int
 )
 
-/*@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun SponcersScreen(){
-    val sponcersvals = listOf(
-        GalleryData(R.drawable.image_1),
-        GalleryData(R.drawable.image_2),
-        GalleryData(R.drawable.image_3),
-        GalleryData(R.drawable.image_4),
-        GalleryData(R.drawable.image_5),
-    )
-    LazyVerticalGrid(cells = GridCells.Fixed(2)){
-        items(sponcersvals) {data->
-            SponcerItem(data)
-
-        }
-    }
-}
-
-
-@Composable
-fun SponcerItem(data : GalleryData){
-    Card(
-        modifier= Modifier.padding(5.dp,0.dp,0.dp,0.dp),
-        backgroundColor = Color.Black
-    ) {
-        val imageModifier = Modifier
-            .size(250.dp)
-
-        Image(
-            painter = painterResource(id = data.imgUri),
-            contentDescription = null,
-            modifier = imageModifier
-        )
-    }
-    Spacer(modifier = Modifier.size(5.dp))
-
-}
-
-
- */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PhotoGallery(){
@@ -438,11 +352,8 @@ fun PhotoItem(data : GalleryData){
 fun getJsonDataFromAsset(context: Context, data: String):String {
     return context.assets.open(data).bufferedReader().use { it.readText() }
 }
-
-
 @Composable
 fun Navigation(navController: NavHostController,startDestination : String){
-
     NavHost(navController, startDestination = startDestination){
         composable(NavigationItem.AnimatedSplashScreen.route){
             AnimatedSplashScreen(navController)
@@ -553,23 +464,12 @@ fun Navigation(navController: NavHostController,startDestination : String){
             Exposcience(navController)
         }
 
-
-
-        composable(NavigationItem.Share.route){
-            ShareScreen()
-        }
-        composable(NavigationItem.Team.route){
-            TeamScreen()
-        }
-
-        composable(NavigationItem.Contact.route){
-            ContactScreen()
-        }
-
         composable(NavigationItem.Sponcers.route){
 
             val scrallablestate = rememberScrollState()
-            Column(modifier = Modifier.verticalScroll(scrallablestate).fillMaxWidth()) {
+            Column(modifier = Modifier
+                .verticalScroll(scrallablestate)
+                .fillMaxWidth()) {
                     SponcerItem(SponcersData(R.drawable.image_1))
                     SponcerItem(SponcersData(R.drawable.image_2))
                     SponcerItem(SponcersData(R.drawable.image_3))

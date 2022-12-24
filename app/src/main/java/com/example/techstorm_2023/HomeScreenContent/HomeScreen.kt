@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,9 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.techstorm_2023.navigation.*
 //import com.example.techstorm_2023.NavigationItem
 import com.example.techstorm_2023.R
+import kotlinx.coroutines.launch
 
 data class homedataobject(
     val imgUri: Int,
@@ -42,14 +45,30 @@ fun HomeScreen(navController: NavHostController) {
 
 
     Column(modifier = Modifier.verticalScroll(scrallablestate).fillMaxWidth()) {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
         for(data in homedata) {
-            HomeItem(data,navController)
+            HomeItem(data,navController, selected = currentRoute == data.route, onItemClick = {
+                navController.navigate(data.route) {
+                    navController.graph.startDestinationRoute?.let { route ->
+                        popUpTo(route) {
+                            saveState = true
+                        }
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+
+//                scope.launch {
+//                    scaffoldState.drawerState.close()
+//                }
+            })
         }
     }
 }
 
 @Composable
-fun HomeItem(data : homedataobject,navController: NavHostController) {
+fun HomeItem(data : homedataobject,navController: NavHostController, selected: Boolean, onItemClick: (NavigationHomeItems) -> Unit) {
     Card(
         modifier = Modifier.padding(10.dp, 10.dp, 10.dp, 10.dp)
             .fillMaxWidth()
