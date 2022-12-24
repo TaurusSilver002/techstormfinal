@@ -14,6 +14,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.techstorm_2023.HomeItem
 import com.example.techstorm_2023.navigation.*
 //import com.example.techstorm223.NavigationItem
@@ -128,8 +130,24 @@ fun CreativeList(navController: NavHostController){
 
 
     Column(modifier = Modifier.verticalScroll(scrallablestate).fillMaxWidth()) {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
         for(data in homedata) {
-            HomeItem(data,navController)
+            HomeItem(data,navController, selected = currentRoute == data.route, onItemClick = {
+                navController.navigate(data.route) {
+                    navController.graph.startDestinationRoute?.let { route ->
+                        popUpTo(route) {
+                            saveState = true
+                        }
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+
+//                scope.launch {
+//                    scaffoldState.drawerState.close()
+//                }
+            })
         }
     }
 }

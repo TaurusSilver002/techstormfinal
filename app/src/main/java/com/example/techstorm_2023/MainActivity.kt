@@ -73,7 +73,8 @@ fun MainScreen(){
         drawerContent = {
             Drawer(scope = scope, scaffoldState = scaffoldState, navController = navController)
         }
-    ) {
+    )
+    {
         Navigation(navController = navController, startDestination = NavigationItem.Home.route)
     }
 
@@ -466,7 +467,9 @@ fun Navigation(navController: NavHostController,startDestination : String){
         composable(NavigationItem.Sponcers.route){
 
             val scrallablestate = rememberScrollState()
-            Column(modifier = Modifier.verticalScroll(scrallablestate).fillMaxWidth()) {
+            Column(modifier = Modifier
+                .verticalScroll(scrallablestate)
+                .fillMaxWidth()) {
                     SponcerItem(SponcersData(R.drawable.image_1))
                     SponcerItem(SponcersData(R.drawable.image_2))
                     SponcerItem(SponcersData(R.drawable.image_3))
